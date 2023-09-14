@@ -12,6 +12,7 @@
 // オリジナルインクルード //
 //////////////////////////
 #include "Keyboard.h"
+#include "Mouse.h"
 
 /*
 [関数概要]
@@ -146,6 +147,21 @@ LRESULT Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 	{
 		Keyboard::GetInstance().UpdateKeyState(wParam, false);
+		break;
+	}
+	// マウスが移動した場合
+	case WM_MOUSEMOVE:
+	{
+		int x = LOWORD(lParam);
+		int y = HIWORD(lParam);
+		Mouse::GetInstance().UpdateMouseMove(x, y);
+		break;
+	}
+	// マウスホイールが回転した場合
+	case WM_MOUSEWHEEL:
+	{
+		int wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+		Mouse::GetInstance().UpdateWheelDelta(wheelDelta);
 		break;
 	}
 	default:
