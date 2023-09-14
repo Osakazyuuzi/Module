@@ -1,35 +1,40 @@
 /////////////////////////////////////////////////////////////////////////
-// ƒtƒ@ƒCƒ‹–¼FWindow.cpp
+// ãƒ•ã‚¡ã‚¤ãƒ«åï¼šWindow.cpp
 /////////////////////////////////////////////////////////////////////////
 #include "Window.h"
 
 /////////////////
-// ƒCƒ“ƒNƒ‹[ƒh //
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ //
 /////////////////
 #include <iostream>
 
+//////////////////////////
+// ã‚ªãƒªã‚¸ãƒŠãƒ«ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ //
+//////////////////////////
+#include "Keyboard.h"
+
 /*
-[ŠÖ”ŠT—v]
-‰Šú‰»ˆ—
+[é–¢æ•°æ¦‚è¦]
+åˆæœŸåŒ–å‡¦ç†
 
-[ˆø”]
-HINSTANCE	hInstance		ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-std::string windowTitle		ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹–¼
-UINT		width			ƒEƒBƒ“ƒhƒEƒTƒCƒYi•j
-UINT		height			ƒEƒBƒ“ƒhƒEƒTƒCƒYi‚‚³j
+[å¼•æ•°]
+HINSTANCE	hInstance		ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+std::string windowTitle		ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ«å
+UINT		width			ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºï¼ˆå¹…ï¼‰
+UINT		height			ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºï¼ˆé«˜ã•ï¼‰
 
-[–ß‚è’l]
-bool		¬Œ÷‚µ‚½‚çtrue, Ž¸”s‚µ‚½‚çfalse‚ð•Ô‚·
+[æˆ»ã‚Šå€¤]
+bool		æˆåŠŸã—ãŸã‚‰true, å¤±æ•—ã—ãŸã‚‰falseã‚’è¿”ã™
 */
 bool Window::Startup(HINSTANCE hInstance, std::string windowTitle, UINT width, UINT height)
 {
-	// ƒƒ“ƒo‚Éî•ñ‚ð“n‚·
+	// ãƒ¡ãƒ³ãƒã«æƒ…å ±ã‚’æ¸¡ã™
 	m_hInstance = hInstance;
 	m_windowTitle = windowTitle;
 	m_width = width;
 	m_height = height;
 
-	// ƒEƒBƒ“ƒhƒNƒ‰ƒXî•ñ‚ÌÝ’è
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹æƒ…å ±ã®è¨­å®š
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_OWNDC;
@@ -44,61 +49,61 @@ bool Window::Startup(HINSTANCE hInstance, std::string windowTitle, UINT width, U
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = m_windowTitle.c_str();
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒXî•ñ‚Ì“o˜^
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹æƒ…å ±ã®ç™»éŒ²
 	RegisterClassEx(&wc);
 
-	// ƒEƒBƒ“ƒhƒE‚ð‰æ–Ê‚Ì’†‰›‚É”z’u
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç”»é¢ã®ä¸­å¤®ã«é…ç½®
 	int centerScreenX = GetSystemMetrics(SM_CXSCREEN) / 2 - m_width / 2;
 	int centerScreenY = GetSystemMetrics(SM_CYSCREEN) / 2 - m_height / 2;
 
-	// ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ÌƒTƒCƒY
+	// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®ã‚µã‚¤ã‚º
 	RECT rc;
 	rc.left = centerScreenX;
 	rc.top = centerScreenY;
 	rc.right = rc.left + width;
 	rc.bottom = rc.top + height;
 
-	// ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ðŒvŽZ
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’è¨ˆç®—
 	AdjustWindowRect(&rc, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE);
 
-	// ƒEƒBƒ“ƒhƒE‚ðì¬
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆ
 	m_handle = CreateWindowEx(
-		0,	// ƒGƒNƒXƒeƒ“ƒVƒ‡ƒ“ƒXƒ^ƒCƒ‹
-		m_windowTitle.c_str(),	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
-		m_windowTitle.c_str(),	// ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹–¼
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,	// ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-		rc.left,			// ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u X
-		rc.top,				// ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u Y
-		rc.right - rc.left,	// ƒEƒBƒ“ƒhƒE‚Ì• X
-		rc.bottom - rc.top,	// ƒEƒBƒ“ƒhƒE‚Ì• Y
-		NULL,				// eƒEƒBƒ“ƒhƒE
-		NULL,				// ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-		this->m_hInstance,	// ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-		NULL				// ƒEƒBƒ“ƒhƒEì¬Žž‚Ìƒpƒ‰ƒ[ƒ^[
+		0,	// ã‚¨ã‚¯ã‚¹ãƒ†ãƒ³ã‚·ãƒ§ãƒ³ã‚¹ã‚¿ã‚¤ãƒ«
+		m_windowTitle.c_str(),	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹å
+		m_windowTitle.c_str(),	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ«å
+		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¹ã‚¿ã‚¤ãƒ«
+		rc.left,			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½® X
+		rc.top,				// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½® Y
+		rc.right - rc.left,	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹… X
+		rc.bottom - rc.top,	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹… Y
+		NULL,				// è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+		NULL,				// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+		this->m_hInstance,	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+		NULL				// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½œæˆæ™‚ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼
 	);
 
-	// ƒGƒ‰[ƒ`ƒFƒbƒN
+	// ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
 	if (m_handle == NULL) {
-		// ƒGƒ‰[ƒƒbƒZ[ƒW‚ðƒRƒ“ƒ\[ƒ‹‚Éo—Í‚·‚é
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«å‡ºåŠ›ã™ã‚‹
 		std::cerr << "Failed to CreateWindow!"
 			<< "\nFile: " << __FILE__
 			<< "\nLine: " << __LINE__ << std::endl;
 
-		// Ž¸”s‚µ‚½‚Ì‚Åfalse‚ð•Ô‚·
+		// å¤±æ•—ã—ãŸã®ã§falseã‚’è¿”ã™
 		return false;
 	}
 
-	// ƒEƒBƒ“ƒhƒE‚Ì•\Ž¦
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º
 	ShowWindow(m_handle, SW_SHOW);
 	UpdateWindow(m_handle);
 
-	// ƒEƒBƒ“ƒhƒE‚ªì¬‚Å‚«‚½‚Ì‚Åtrue‚ð•Ô‚·
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã§ããŸã®ã§trueã‚’è¿”ã™
 	return true;
 }
 
 /*
-[ŠÖ”ŠT—v]
-I—¹ˆ—
+[é–¢æ•°æ¦‚è¦]
+çµ‚äº†å‡¦ç†
 */
 void Window::Shutdown()
 {
@@ -110,16 +115,16 @@ void Window::Shutdown()
 }
 
 /*
-[ŠÖ”ŠT—v]
-ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+[é–¢æ•°æ¦‚è¦]
+ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 
-[ˆø”]
-HWND		hWnd		ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-UINT		msg			ƒƒbƒZ[ƒW
-WPARAM		wParam		ãˆÊƒrƒbƒg
-LPARAM		lParam		‰ºˆÊƒrƒbƒg
+[å¼•æ•°]
+HWND		hWnd		ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+UINT		msg			ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+WPARAM		wParam		ä¸Šä½ãƒ“ãƒƒãƒˆ
+LPARAM		lParam		ä¸‹ä½ãƒ“ãƒƒãƒˆ
 
-[–ß‚è’l]
+[æˆ»ã‚Šå€¤]
 LRESULT
 */
 LRESULT Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -130,6 +135,18 @@ LRESULT Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		PostQuitMessage(0);
 		return 0;
+	}
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãŒæŠ¼ã•ã‚ŒãŸå ´åˆ
+	case WM_KEYDOWN:
+	{
+		Keyboard::GetInstance().UpdateKeyState(wParam, true);
+		break;
+	}
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãŒæŠ¼ã•ã‚Œãªããªã£ãŸå ´åˆ
+	case WM_KEYUP:
+	{
+		Keyboard::GetInstance().UpdateKeyState(wParam, false);
+		break;
 	}
 	default:
 		return DefWindowProc(hWnd, msg, wParam, lParam);
