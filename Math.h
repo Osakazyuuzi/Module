@@ -1,12 +1,16 @@
 /////////////////////////////////////////////////////////////////////////
-// ÉtÉ@ÉCÉãñºÅFMath.h
+// „Éï„Ç°„Ç§„É´ÂêçÔºöMath.h
 /////////////////////////////////////////////////////////////////////////
 #ifndef ___CORESYSTEM_MODULE_MATH_H___
 #define ___CORESYSTEM_MODULE_MATH_H___
 
 /////////////////
-// ÉCÉìÉNÉãÅ[Éh //
+// „Ç§„É≥„ÇØ„É´„Éº„Éâ //
 /////////////////
 #include <DirectXMath.h>
+
+typedef DirectX::XMFLOAT2 Float2;
+typedef DirectX::XMFLOAT3 Float3;
+typedef DirectX::XMFLOAT4 Float4;
 
 #endif //!___CORESYSTEM_MODULE_MATH_H___
