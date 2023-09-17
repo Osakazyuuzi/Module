@@ -1,0 +1,9 @@
+/////////////////////////////////////////////////////////////////////////
+// ファイル名：ComponentBase.h
+/////////////////////////////////////////////////////////////////////////
+#ifndef ___CORESYSTEM_MODULE_COMPONENTBASE_H___
+#define ___CORESYSTEM_MODULE_COMPONENTBASE_H___
+
+struct ComponentBase {};
+
+#endif //!___CORESYSTEM_MODULE_COMPONENTBASE_H___
