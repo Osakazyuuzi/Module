@@ -28,6 +28,8 @@ namespace ECSUntils
 	//--- 別名エイリアス
 	using IdentifierBit = std::bitset<ECSUntils::ENTITY_IDENTIFIER_BIT>;
 	using ComponentBit = std::bitset<ECSUntils::MAX_COMPONENT_COUNT>;
+	using IndexBit = std::bitset<ENTITY_INDEX_BIT>;
+	using VersionBit = std::bitset<ENTITY_VERSION_BIT>;
 
 	//--- エンティティの識別ビット管理関数
 	/*
@@ -35,32 +37,62 @@ namespace ECSUntils
 	Entityを識別するBitsetの上位ビットにインデックスを設定する
 
 	[引数]
-	std::bitset<ENTITY_IDENTIFIER_BIT>&		bit		エンティティが持つ識別ビット
-	std::size_t								id		設定するインデックス
+	IdentifierBit&		bit		エンティティが持つ識別ビット
+	std::size_t								index		設定するインデックス
 	*/
-	void SetIndex(_Out_ std::bitset<ENTITY_IDENTIFIER_BIT>& bit, _In_ std::size_t id)
+	void SetIndex(_Out_ IdentifierBit& bit, _In_ std::size_t index)
 	{
 		// 下位ビットのみを残す
 		bit &= std::bitset<ENTITY_IDENTIFIER_BIT>((1ull << ENTITY_VERSION_BIT) - 1);
 
 		// 上位ビットに下位ビット分ずらした値をセットする
-		bit |= std::bitset<ENTITY_IDENTIFIER_BIT>(id << ENTITY_VERSION_BIT);
+		bit |= std::bitset<ENTITY_IDENTIFIER_BIT>(index << ENTITY_VERSION_BIT);
 	}
 	/*
 	[関数概要]
 	Entityを識別するBitsetの下位ビットにバージョンを設定する
 
 	[引数]
-	std::bitset<ENTITY_IDENTIFIER_BIT>&		bit			エンティティが持つ識別ビット
+	IdentifierBit&		bit			エンティティが持つ識別ビット
 	std::size_t								version		設定するバージョン
 	*/
-	void SetVersion(_Out_ std::bitset<ENTITY_IDENTIFIER_BIT>& bit, _In_ std::size_t version)
+	void SetVersion(_Out_ IdentifierBit& bit, _In_ std::size_t version)
 	{
 		// 上位ビットのみを残す
 		bit &= std::bitset<ENTITY_IDENTIFIER_BIT>(~((1ull << ENTITY_VERSION_BIT) - 1));
 
 		// 下位ビットに値をセットする
 		bit |= std::bitset<ENTITY_IDENTIFIER_BIT>(version);
+	}
+
+	/*
+	[関数概要]
+	Entityを識別するBitsetの上位ビットからインデックスを取得する
+
+	[引数]
+	const IdentifierBit& bit		エンティティが持つ識別ビット
+
+	[戻り値]
+	IndexBit		取得したインデックス
+	*/
+	IndexBit GetIndex(const IdentifierBit& bit)
+	{
+		return IndexBit((bit >> ENTITY_VERSION_BIT).to_ullong());
+	}
+
+	/*
+	[関数概要]
+	Entityを識別するBitsetの下位ビットからバージョンを取得する
+
+	[引数]
+	const IdentifierBit& bit		エンティティが持つ識別ビット
+
+	[戻り値]
+	VersionBit		取得したバージョン
+	*/
+	VersionBit GetVersion(const IdentifierBit& bit)
+	{
+		return VersionBit(bit.to_ullong() & ((1ull << ENTITY_VERSION_BIT) - 1));
 	}
 }
 
