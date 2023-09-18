@@ -1,65 +1,65 @@
 /////////////////////////////////////////////////////////////////////////
-// ƒtƒ@ƒCƒ‹–¼FECSUtils.h
+// ãƒ•ã‚¡ã‚¤ãƒ«åï¼šECSUtils.h
 /////////////////////////////////////////////////////////////////////////
 #ifndef ___CORESYSTEM_MODULE_ECSUTILS_H___
 #define ___CORESYSTEM_MODULE_ECSUTILS_H___
 
 /////////////////
-// ƒCƒ“ƒNƒ‹[ƒh //
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ //
 /////////////////
 #include <bitset>
 
 namespace ECSUntils
 {
-	//--- ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌÅ‘åí—Ş”
+	//--- ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æœ€å¤§ç¨®é¡æ•°
 	constexpr std::size_t MAX_COMPONENT_COUNT = 128;
 
-	//--- ƒGƒ“ƒeƒBƒeƒB‚Ìó‘Ô
+	//--- ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®çŠ¶æ…‹
 	enum class EntityState {
-		Active,		// ƒAƒNƒeƒBƒuiXVE•`‰æ‹¤‚És‚í‚ê‚éj
-		Inactive,	// ”ñƒAƒNƒeƒBƒuiXVE•`‰æ‹¤‚És‚í‚ê‚È‚¢j
-		Destroyed};	// ‘¶İ‚µ‚È‚¢
+		Active,		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ï¼ˆæ›´æ–°ãƒ»æç”»å…±ã«è¡Œã‚ã‚Œã‚‹ï¼‰
+		Inactive,	// éã‚¢ã‚¯ãƒ†ã‚£ãƒ–ï¼ˆæ›´æ–°ãƒ»æç”»å…±ã«è¡Œã‚ã‚Œãªã„ï¼‰
+		Destroyed};	// å­˜åœ¨ã—ãªã„
 
-	//--- ƒGƒ“ƒeƒBƒeƒB‚Ì¯•Êƒrƒbƒg
-	constexpr std::size_t ENTITY_IDENTIFIER_BIT = 32;
-	constexpr std::size_t ENTITY_UNIQUEID_BIT = ENTITY_IDENTIFIER_BIT / 2;	// ƒ†ƒj[ƒNID‚Ìƒrƒbƒg”(ãˆÊƒrƒbƒg)
-	constexpr std::size_t ENTITY_VERSION_BIT = ENTITY_IDENTIFIER_BIT - ENTITY_UNIQUEID_BIT;	// ƒo[ƒWƒ‡ƒ“”Ô†‚Ìƒrƒbƒg”i‰ºˆÊƒrƒbƒgj
+	//--- ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è­˜åˆ¥ãƒ“ãƒƒãƒˆ
+	constexpr std::size_t ENTITY_IDENTIFIER_BIT = 64;
+	constexpr std::size_t ENTITY_INDEX_BIT = ENTITY_IDENTIFIER_BIT / 2;	// ç®¡ç†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ãƒ“ãƒƒãƒˆæ•°(ä¸Šä½ãƒ“ãƒƒãƒˆ)
+	constexpr std::size_t ENTITY_VERSION_BIT = ENTITY_IDENTIFIER_BIT - ENTITY_INDEX_BIT;	// ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã®ãƒ“ãƒƒãƒˆæ•°ï¼ˆä¸‹ä½ãƒ“ãƒƒãƒˆï¼‰
 
-	//--- •Ê–¼ƒGƒCƒŠƒAƒX
+	//--- åˆ¥åã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	using IdentifierBit = std::bitset<ECSUntils::ENTITY_IDENTIFIER_BIT>;
 	using ComponentBit = std::bitset<ECSUntils::MAX_COMPONENT_COUNT>;
 
-	//--- ƒGƒ“ƒeƒBƒeƒB‚Ì¯•ÊƒrƒbƒgŠÇ—ŠÖ”
+	//--- ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è­˜åˆ¥ãƒ“ãƒƒãƒˆç®¡ç†é–¢æ•°
 	/*
-	[ŠÖ”ŠT—v]
-	Entity‚ğ¯•Ê‚·‚éBitset‚ÌãˆÊƒrƒbƒg‚ÉID‚ğİ’è‚·‚é
+	[é–¢æ•°æ¦‚è¦]
+	Entityã‚’è­˜åˆ¥ã™ã‚‹Bitsetã®ä¸Šä½ãƒ“ãƒƒãƒˆã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’è¨­å®šã™ã‚‹
 
-	[ˆø”]
-	std::bitset<ENTITY_IDENTIFIER_BIT>&		bit		ƒGƒ“ƒeƒBƒeƒB‚ª‚Â¯•Êƒrƒbƒg
-	std::size_t								id		İ’è‚·‚éID
+	[å¼•æ•°]
+	std::bitset<ENTITY_IDENTIFIER_BIT>&		bit		ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãŒæŒã¤è­˜åˆ¥ãƒ“ãƒƒãƒˆ
+	std::size_t								id		è¨­å®šã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	*/
-	void SetUniqueID(_Out_ std::bitset<ENTITY_IDENTIFIER_BIT>& bit, _In_ std::size_t id)
+	void SetIndex(_Out_ std::bitset<ENTITY_IDENTIFIER_BIT>& bit, _In_ std::size_t id)
 	{
-		// ‰ºˆÊƒrƒbƒg‚Ì‚İ‚ğc‚·
+		// ä¸‹ä½ãƒ“ãƒƒãƒˆã®ã¿ã‚’æ®‹ã™
 		bit &= std::bitset<ENTITY_IDENTIFIER_BIT>((1ull << ENTITY_VERSION_BIT) - 1);
 
-		// ãˆÊƒrƒbƒg‚É‰ºˆÊƒrƒbƒg•ª‚¸‚ç‚µ‚½’l‚ğƒZƒbƒg‚·‚é
+		// ä¸Šä½ãƒ“ãƒƒãƒˆã«ä¸‹ä½ãƒ“ãƒƒãƒˆåˆ†ãšã‚‰ã—ãŸå€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		bit |= std::bitset<ENTITY_IDENTIFIER_BIT>(id << ENTITY_VERSION_BIT);
 	}
 	/*
-	[ŠÖ”ŠT—v]
-	Entity‚ğ¯•Ê‚·‚éBitset‚Ì‰ºˆÊƒrƒbƒg‚Éƒo[ƒWƒ‡ƒ“‚ğİ’è‚·‚é
+	[é–¢æ•°æ¦‚è¦]
+	Entityã‚’è­˜åˆ¥ã™ã‚‹Bitsetã®ä¸‹ä½ãƒ“ãƒƒãƒˆã«ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’è¨­å®šã™ã‚‹
 
-	[ˆø”]
-	std::bitset<ENTITY_IDENTIFIER_BIT>&		bit			ƒGƒ“ƒeƒBƒeƒB‚ª‚Â¯•Êƒrƒbƒg
-	std::size_t								version		İ’è‚·‚éƒo[ƒWƒ‡ƒ“
+	[å¼•æ•°]
+	std::bitset<ENTITY_IDENTIFIER_BIT>&		bit			ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãŒæŒã¤è­˜åˆ¥ãƒ“ãƒƒãƒˆ
+	std::size_t								version		è¨­å®šã™ã‚‹ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 	*/
 	void SetVersion(_Out_ std::bitset<ENTITY_IDENTIFIER_BIT>& bit, _In_ std::size_t version)
 	{
-		// ãˆÊƒrƒbƒg‚Ì‚İ‚ğc‚·
+		// ä¸Šä½ãƒ“ãƒƒãƒˆã®ã¿ã‚’æ®‹ã™
 		bit &= std::bitset<ENTITY_IDENTIFIER_BIT>(~((1ull << ENTITY_VERSION_BIT) - 1));
 
-		// ‰ºˆÊƒrƒbƒg‚É’l‚ğƒZƒbƒg‚·‚é
+		// ä¸‹ä½ãƒ“ãƒƒãƒˆã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		bit |= std::bitset<ENTITY_IDENTIFIER_BIT>(version);
 	}
 }
