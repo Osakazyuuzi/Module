@@ -16,9 +16,9 @@
 #include "ECSUtils.h"
 
 struct Entity {
-	ECSUntils::ComponentBit		m_componentBit;		// コンポーネント所持ビット
-	ECSUntils::IdentifierBit	m_identifierBit;	// 識別ビット
-	ECSUntils::EntityState		m_state;			// エンティティの状態
+	ECSUtils::ComponentBit		m_componentBit;		// コンポーネント所持ビット
+	ECSUtils::IdentifierBit		m_identifierBit;	// 識別ビット
+	ECSUtils::EntityState		m_state;			// エンティティの状態
 };
 
 #endif //!___CORESYSTEM_MODULE_ENTITY_H___
