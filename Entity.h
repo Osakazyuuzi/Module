@@ -1,24 +1,24 @@
 /////////////////////////////////////////////////////////////////////////
-// ƒtƒ@ƒCƒ‹–¼FEntity.h
+// ãƒ•ã‚¡ã‚¤ãƒ«åï¼šEntity.h
 /////////////////////////////////////////////////////////////////////////
 #ifndef ___CORESYSTEM_MODULE_ENTITY_H___
 #define ___CORESYSTEM_MODULE_ENTITY_H___
 
 /////////////////
-// ƒCƒ“ƒNƒ‹[ƒh //
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ //
 /////////////////
 #include <bitset>
 #include <array>
 
 //////////////////////////
-// ƒIƒŠƒWƒiƒ‹ƒCƒ“ƒNƒ‹[ƒh //
+// ã‚ªãƒªã‚¸ãƒŠãƒ«ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ //
 //////////////////////////
 #include "ECSUtils.h"
 
 struct Entity {
-	ECSUntils::IdentifierBit	m_identifierBit;	// ¯•Êƒrƒbƒg
-	ECSUntils::ComponentBit		m_componentBit;		// ƒRƒ“ƒ|[ƒlƒ“ƒgŠƒrƒbƒg
-	ECSUntils::EntityState		m_state;			// ƒGƒ“ƒeƒBƒeƒB‚Ìó‘Ô
+	ECSUntils::ComponentBit		m_componentBit;		// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆæ‰€æŒãƒ“ãƒƒãƒˆ
+	ECSUntils::IdentifierBit	m_identifierBit;	// è­˜åˆ¥ãƒ“ãƒƒãƒˆ
+	ECSUntils::EntityState		m_state;			// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®çŠ¶æ…‹
 };
 
 #endif //!___CORESYSTEM_MODULE_ENTITY_H___
