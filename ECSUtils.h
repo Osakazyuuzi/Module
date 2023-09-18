@@ -9,7 +9,7 @@
 /////////////////
 #include <bitset>
 
-namespace ECSUntils
+namespace ECSUtils
 {
 	//--- コンポーネントの最大種類数
 	constexpr std::size_t MAX_COMPONENT_COUNT = 128;
@@ -26,8 +26,8 @@ namespace ECSUntils
 	constexpr std::size_t ENTITY_VERSION_BIT = ENTITY_IDENTIFIER_BIT - ENTITY_INDEX_BIT;	// バージョン番号のビット数（下位ビット）
 
 	//--- 別名エイリアス
-	using IdentifierBit = std::bitset<ECSUntils::ENTITY_IDENTIFIER_BIT>;
-	using ComponentBit = std::bitset<ECSUntils::MAX_COMPONENT_COUNT>;
+	using IdentifierBit = std::bitset<ECSUtils::ENTITY_IDENTIFIER_BIT>;
+	using ComponentBit = std::bitset<ECSUtils::MAX_COMPONENT_COUNT>;
 	using IndexBit = std::bitset<ENTITY_INDEX_BIT>;
 	using VersionBit = std::bitset<ENTITY_VERSION_BIT>;
 
